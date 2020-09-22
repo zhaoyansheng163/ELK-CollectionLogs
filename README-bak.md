@@ -1,8 +1,6 @@
 ﻿## 利用Filebeat采集日志  
 
-目录介绍：
-
-安装kibana es 参考 ：https://www.cnblogs.com/xiayudashan/p/11488843.html  
+目录介绍：  
 
 - Filebeat 存放Filebeat的配置，主要在于采集和发送，有两个文件，分别是基于Logstash的和基于Ingest Node的。
 - Ingest Node 存放一个Spring-Logs例子的管道，具体描述参照filebeat结合Ingest Node采集特定格式的日志.md 
@@ -11,11 +9,12 @@
 
 1. 构建Spirng-Logs项目
 ```
-maven clean package
+gradle clean build -x test docker
 ```
 上面构建命令失败的话，可采取下面的命令
 ```
-docker build -t spring-logs:latest .
+gradle clean build -x test
+docker build -t Spring-Logs:latest .
 ```
 2(logstash方案). 启动Logstash容器
 编辑logstash.conf 文件，更改成自己的es ip地址和logstash.conf文件的挂载路径。接着运行：
@@ -23,6 +22,9 @@ docker build -t spring-logs:latest .
 docker-compose up -d
 ```
 注意：由于logstash启动较慢，处理转发日志可能需要等一会
+
+2(ingest方案).在elasticsearch上创建相应管道    
+编辑filebeat-ingestnode.yml，将管道名改成刚创建的那个，在发送到自己的es 地址上。
 
 3. 启动项目前更改docker-compose，查看对应的挂载文件是否正确，并且自己替换对应的Logstash ip地址，检查无误后使用下面命令运行：
 ```

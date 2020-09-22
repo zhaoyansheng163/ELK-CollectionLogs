@@ -1,14 +1,14 @@
 version: '3'
 services:
   spring-logs:
-    image: 17zwd/spring-logs:1.0.0
+    image: spring-logs:latest 
     ports:
     - "8080:8080"
     volumes:
-    - "E:/var/log:/var/log"
+    - "/var/log:/var/log"
   filebest-logs:
     image: docker.elastic.co/beats/filebeat:6.5.1
     volumes:
-    - "E:/javaEEProject/Project/Spring-Logs/filebeat/filebeat-logstash.yml:/usr/share/filebeat/filebeat.yml"
-    - "E:/var/log:/var/log"
-    - "E:/javaEEProject/Project/Spring-Logs/filebeat/registry:/usr/share/filebeat/data/registry"
+    - "/root/pro/filebeat/filebeat-logstash.yml:/usr/share/filebeat/filebeat.yml"
+    - "/var/log:/var/log"
+    - "/root/pro/filebeat/registry:/usr/share/filebeat/data/registry"
