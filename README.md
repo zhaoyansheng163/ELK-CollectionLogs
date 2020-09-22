@@ -9,12 +9,11 @@
 
 1. 构建Spirng-Logs项目
 ```
-gradle clean build -x test docker
+maven clean package
 ```
 上面构建命令失败的话，可采取下面的命令
 ```
-gradle clean build -x test
-docker build -t Spring-Logs:latest .
+docker build -t spring-logs:latest .
 ```
 2(logstash方案). 启动Logstash容器
 编辑logstash.conf 文件，更改成自己的es ip地址和logstash.conf文件的挂载路径。接着运行：
@@ -22,9 +21,6 @@ docker build -t Spring-Logs:latest .
 docker-compose up -d
 ```
 注意：由于logstash启动较慢，处理转发日志可能需要等一会
-
-2(ingest方案).在elasticsearch上创建相应管道    
-编辑filebeat-ingestnode.yml，将管道名改成刚创建的那个，在发送到自己的es 地址上。
 
 3. 启动项目前更改docker-compose，查看对应的挂载文件是否正确，并且自己替换对应的Logstash ip地址，检查无误后使用下面命令运行：
 ```
